@@ -89,12 +89,6 @@ nav a:hover{color:white}
 .active-tag button{background:none;border:none;color:white;cursor:pointer;font-size:.9rem;line-height:1;padding:0}
 .sort-select{border:1.5px solid var(--border);border-radius:6px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;background:white;color:var(--text);cursor:pointer}
 
-/* ── QUIZ BANNER ── */
-.quiz-banner{background:#FFF7F0;border:1.5px solid #F0C0A0;border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
-.quiz-text{font-size:.85rem;color:var(--text)}
-.quiz-text strong{display:block;margin-bottom:2px}
-.quiz-text span{color:var(--muted);font-size:.8rem}
-.quiz-btn{background:var(--accent);color:white;border:none;border-radius:6px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0}
 
 /* ── GRID ── */
 .ski-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
@@ -192,27 +186,6 @@ footer .footer-col a{display:block;margin-bottom:.4rem;font-size:.82rem}
 .pay-logos{display:flex;justify-content:center;gap:1rem;margin-top:.75rem;align-items:center}
 .pay-chip{background:rgba(255,255,255,.08);border-radius:4px;padding:4px 10px;font-size:.75rem;font-weight:500;color:#9DB4CC}
 
-/* ── AGENT ── */
-.agent-modal{background:white;border-radius:16px;width:100%;max-width:480px;display:flex;flex-direction:column;overflow:hidden;max-height:90vh}
-.agent-header{background:var(--night);color:white;padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;position:relative}
-.agent-avatar{font-size:1.6rem;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.agent-title{font-weight:500;font-size:.95rem}
-.agent-sub{font-size:.72rem;color:#7A9AB5;margin-top:1px}
-.agent-header .modal-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);color:white;border:none;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.agent-messages{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;min-height:280px;max-height:380px;background:var(--snow)}
-.agent-msg{padding:.7rem .9rem;border-radius:10px;font-size:.88rem;line-height:1.55;max-width:85%;white-space:pre-wrap}
-.msg-agent{background:white;border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:4px 10px 10px 10px}
-.msg-user{background:var(--glacier);color:white;align-self:flex-end;border-radius:10px 4px 10px 10px}
-.typing-indicator{display:flex;gap:5px;align-items:center;padding:.6rem .9rem}
-.typing-indicator span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce .9s infinite}
-.typing-indicator span:nth-child(2){animation-delay:.15s}
-.typing-indicator span:nth-child(3){animation-delay:.3s}
-@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-.agent-input-row{display:flex;gap:8px;padding:.75rem 1rem;border-top:1px solid var(--border);background:white}
-.agent-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);outline:none}
-.agent-input:focus{border-color:var(--glacier)}
-.agent-send{background:var(--glacier);color:white;border:none;border-radius:8px;width:38px;height:38px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
-.agent-send:hover{background:var(--accent)}
 
 @media(max-width:760px){
   .page-wrap{grid-template-columns:1fr}
@@ -362,13 +335,6 @@ footer .footer-col a{display:block;margin-bottom:.4rem;font-size:.82rem}
 
     <div class="active-filters" id="active-filters"></div>
 
-    <div class="quiz-banner">
-      <div class="quiz-text">
-        <strong>¿No sabes qué esquí elegir?</strong>
-        <span>5 preguntas para encontrar tu par ideal según tu nivel y las pistas de Aysén</span>
-      </div>
-      <button class="quiz-btn" onclick="openQuiz()">Hacer el test →</button>
-    </div>
 
     <div class="ski-grid" id="ski-grid">
 
@@ -703,24 +669,6 @@ footer .footer-col a{display:block;margin-bottom:.4rem;font-size:.82rem}
   </div>
 </footer>
 
-<!-- AGENT MODAL -->
-<div class="modal-overlay" id="agent-overlay" onclick="if(event.target===this)closeAgent()">
-  <div class="agent-modal">
-    <div class="agent-header">
-      <div class="agent-avatar">🎿</div>
-      <div>
-        <div class="agent-title">Asesor Koyai Ski</div>
-        <div class="agent-sub">Responde en segundos · IA</div>
-      </div>
-      <button class="modal-close" onclick="closeAgent()">✕</button>
-    </div>
-    <div class="agent-messages" id="agent-messages"></div>
-    <div class="agent-input-row">
-      <input type="text" id="agent-input" class="agent-input" placeholder="Escribe tu respuesta..." autocomplete="off">
-      <button class="agent-send" onclick="agentSend()">→</button>
-    </div>
-  </div>
-</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
@@ -830,168 +778,7 @@ function filterByType(tipo){
   document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
 }
 
-// ── AGENT ──
-const STOCK = [
-  {nombre:"Rossignol Experience 78 Carbon",tipo:"carving",genero:"hombre",nivel:["iniciante","intermedio"],talla:165,precio:290000,estado:"Muy buen estado",estrellas:4},
-  {nombre:"Salomon QST 99 + fijaciones",tipo:"all-mountain",genero:"hombre",nivel:["intermedio","avanzado"],talla:172,precio:480000,estado:"Como nuevo",estrellas:5},
-  {nombre:"Atomic Bent Chetler 100",tipo:"freeride",genero:"hombre",nivel:["avanzado"],talla:180,precio:195000,estado:"Buen estado",estrellas:4},
-  {nombre:"Head Kore 93 W — Mujer",tipo:"carving",genero:"mujer",nivel:["intermedio","avanzado"],talla:158,precio:320000,estado:"Impecable",estrellas:5},
-  {nombre:"K2 Mindbender 108 Ti",tipo:"all-mountain",genero:"hombre",nivel:["intermedio"],talla:176,precio:140000,estado:"Estado regular",estrellas:3},
-  {nombre:"Fischer RC4 Worldcup SC",tipo:"carving",genero:"mujer",nivel:["avanzado"],talla:160,precio:410000,estado:"Excelente",estrellas:5}
-];
 
-let agentHistory = [];
-
-function openQuiz(){
-  agentHistory = [];
-  document.getElementById('agent-messages').innerHTML = '';
-  document.getElementById('agent-input').value = '';
-  document.getElementById('agent-overlay').classList.add('open');
-  agentStart();
-}
-
-function closeAgent(){
-  document.getElementById('agent-overlay').classList.remove('open');
-}
-
-async function agentStart(){
-  const sys = `Eres un asesor experto en esquís de segunda mano para la tienda Koyai Ski en Coyhaique, Aysén, Chile. El dueño tiene 19 temporadas de experiencia como pistero-socorrista y formador.
-
-Tu misión: hacer exactamente 4 preguntas, una por una, para recomendar el esquí ideal del stock disponible. Sé directo, amable, breve. Habla en español.
-
-Las 4 preguntas (en este orden):
-1. Nivel de esquí (principiante / intermedio / avanzado)
-2. Tipo de práctica (pista preparada / all mountain / freeride / polvo)
-3. Talla del esquiador en cm (para calcular la longitud de ski correcta)
-4. Género (hombre / mujer)
-
-Después de las 4 respuestas, analiza el stock y recomienda el mejor match con una explicación concisa de por qué. Si hay más de uno que encaja, menciona ambos. Si ninguno encaja perfectamente, recomienda el más cercano y explica el compromiso.
-
-Stock disponible (JSON):
-${JSON.stringify(STOCK, null, 2)}
-
-Reglas técnicas de talla:
-- Carving pista: talla esquiador - 10 a - 5 cm
-- All mountain: talla esquiador - 5 a + 5 cm  
-- Freeride / polvo: talla esquiador + 0 a + 10 cm
-
-Empieza presentándote muy brevemente (1 frase) y haciendo la primera pregunta.`;
-
-  agentHistory = [{role:'user', content:'Empezar'}];
-  const reply = await callAgent(sys);
-  appendMessage('agent', reply);
-}
-
-async function agentSend(){
-  const input = document.getElementById('agent-input');
-  const text = input.value.trim();
-  if(!text) return;
-  input.value = '';
-  appendMessage('user', text);
-  agentHistory.push({role:'user', content: text});
-  
-  const sys = `Eres un asesor experto en esquís de segunda mano para Koyai Ski en Coyhaique, Aysén. Directo, amable, breve. Español.
-
-Proceso: hacer exactamente 4 preguntas en orden — nivel, tipo de práctica, talla, género — luego recomendar el mejor esquí del stock.
-
-Stock disponible:
-${JSON.stringify(STOCK, null, 2)}
-
-Reglas técnicas de talla:
-- Carving pista: talla esquiador - 10 a - 5 cm
-- All mountain: talla esquiador - 5 a + 5 cm
-- Freeride / polvo: talla esquiador + 0 a + 10 cm
-
-Cuando hagas la recomendación final, termina con esta línea exacta:
-RECOMENDACION:[nombre exacto del ski]`;
-
-  showTyping();
-  const reply = await callAgent(sys);
-  hideTyping();
-  agentHistory.push({role:'assistant', content: reply});
-
-  const recMatch = reply.match(/RECOMENDACION:\[(.+?)\]/);
-  if(recMatch){
-    const skiName = recMatch[1];
-    const cleanReply = reply.replace(/RECOMENDACION:\[.+?\]/, '').trim();
-    appendMessage('agent', cleanReply);
-    highlightRecommended(skiName);
-  } else {
-    appendMessage('agent', reply);
-  }
-}
-
-async function callAgent(systemPrompt){
-  try {
-    const messages = agentHistory.length > 1 
-      ? agentHistory.slice(1) 
-      : [{role:'user', content:'Empezar'}];
-    
-    const res = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system: systemPrompt,
-        messages: messages
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.filter(b=>b.type==='text').map(b=>b.text).join('') || 'Error al conectar con el agente.';
-    agentHistory.push({role:'assistant', content: text});
-    return text;
-  } catch(e) {
-    return 'Error de conexión. Escríbenos por WhatsApp para asesoramiento directo.';
-  }
-}
-
-function appendMessage(role, text){
-  const wrap = document.getElementById('agent-messages');
-  const div = document.createElement('div');
-  div.className = 'agent-msg ' + (role==='user' ? 'msg-user' : 'msg-agent');
-  div.textContent = text;
-  wrap.appendChild(div);
-  wrap.scrollTop = wrap.scrollHeight;
-}
-
-function showTyping(){
-  const wrap = document.getElementById('agent-messages');
-  const div = document.createElement('div');
-  div.className = 'agent-msg msg-agent typing-indicator';
-  div.id = 'typing';
-  div.innerHTML = '<span></span><span></span><span></span>';
-  wrap.appendChild(div);
-  wrap.scrollTop = wrap.scrollHeight;
-}
-
-function hideTyping(){
-  const t = document.getElementById('typing');
-  if(t) t.remove();
-}
-
-function highlightRecommended(skiName){
-  document.querySelectorAll('.ski-card').forEach(c=>{
-    const name = c.querySelector('.card-name')?.textContent || '';
-    const brand = c.querySelector('.card-brand')?.textContent || '';
-    if(skiName.includes(name) || skiName.includes(brand)){
-      c.style.border = '2.5px solid var(--accent)';
-      c.style.boxShadow = '0 0 0 4px rgba(232,56,13,.15)';
-      const tag = document.createElement('div');
-      tag.style.cssText = 'background:var(--accent);color:white;font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;text-align:center';
-      tag.textContent = '⭐ Recomendado para ti';
-      c.insertBefore(tag, c.firstChild);
-    }
-  });
-  closeAgent();
-  document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
-}
-
-document.addEventListener('keydown', e=>{
-  if(e.key==='Enter' && document.getElementById('agent-overlay').classList.contains('open')){
-    agentSend();
-  }
-});
 
 // MODAL
 function openModal(name, price){
