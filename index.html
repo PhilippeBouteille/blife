@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koyai Ski — Esquís de segunda mano en Coyhaique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --snow:#F5F6F7;--ice:#DDE6EF;--glacier:#1A3A5C;--night:#0D1B2A;
+  --accent:#E8380D;--accent2:#2A7DB4;--text:#0D1B2A;--muted:#6B7C8D;
+  --card:#ffffff;--border:#D0DCE8;--border2:#B8CCDE;
+  --mp:#009EE3;--tb:#004A96;
+  --sidebar:260px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--snow);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:15px}
+
+/* ── HEADER ── */
+header{background:var(--night);color:white;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:66px;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--accent)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.08em;color:white;display:flex;align-items:center;gap:8px}
+.logo em{font-style:normal;color:var(--accent)}
+nav{display:flex;gap:1.2rem;align-items:center}
+nav a{color:#9DB4CC;text-decoration:none;font-size:.88rem;transition:color .2s}
+nav a:hover{color:white}
+.nav-cta{background:var(--accent);color:white!important;padding:7px 16px;border-radius:4px;font-weight:500}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(130deg,var(--night) 0%,var(--glacier) 70%,#2A5A8A 100%);color:white;padding:3rem 2rem 3.5rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:var(--snow);clip-path:polygon(0 100%,100% 100%,100% 0,50% 60%,0 0)}
+.hero-inner{max-width:700px}
+.hero-badge{display:inline-block;background:var(--accent);color:white;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:1rem}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,6vw,4.2rem);letter-spacing:.04em;line-height:.95;margin-bottom:.8rem}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:1rem;color:#9DB4CC;max-width:480px;font-weight:300;line-height:1.6}
+
+/* ── RÉASSURANCE ── */
+.reassurance{background:white;border-bottom:1px solid var(--border);padding:1rem 2rem}
+.reassurance-inner{max-width:1100px;margin:0 auto;display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+.rea-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text)}
+.rea-item .icon{font-size:1.2rem;flex-shrink:0}
+.rea-item strong{font-weight:500}
+.rea-item span{color:var(--muted);font-size:.8rem}
+
+/* ── RATINGS BAR (Trustpilot-style) ── */
+.ratings-bar{background:var(--glacier);color:white;padding:.75rem 2rem}
+.ratings-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.stars-display{display:flex;gap:3px;font-size:1.1rem;color:#00B67A}
+.ratings-text{font-size:.85rem;color:#9DB4CC}
+.ratings-text strong{color:white}
+.verified-badge{margin-left:auto;font-size:.78rem;color:#9DB4CC;display:flex;align-items:center;gap:6px}
+.verified-badge::before{content:'✓';color:#00B67A;font-weight:700}
+
+/* ── MAIN LAYOUT ── */
+.page-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:var(--sidebar) 1fr;gap:2rem;align-items:start}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:80px}
+.sidebar-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:var(--night);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent)}
+
+.filter-group{border-bottom:1px solid var(--border);padding:.75rem 0}
+.filter-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;cursor:pointer;padding:0;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;color:var(--text)}
+.filter-toggle .arrow{font-size:.8rem;color:var(--muted);transition:transform .2s}
+.filter-toggle.open .arrow{transform:rotate(180deg)}
+.filter-body{display:none;padding-top:.75rem}
+.filter-body.open{display:block}
+
+.check-list{list-style:none}
+.check-list li{margin-bottom:.4rem}
+.check-list label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.85rem;color:var(--text)}
+.check-list input[type=checkbox]{accent-color:var(--glacier);width:15px;height:15px;cursor:pointer}
+.check-list .count{margin-left:auto;font-size:.75rem;color:var(--muted)}
+
+.range-wrap{padding:.25rem 0 .5rem}
+.range-wrap input[type=range]{width:100%;accent-color:var(--glacier)}
+.range-labels{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:4px}
+
+.filter-reset{width:100%;margin-top:1rem;padding:8px;border:1.5px solid var(--border);background:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.83rem;color:var(--muted);cursor:pointer;transition:all .2s}
+.filter-reset:hover{border-color:var(--glacier);color:var(--glacier)}
+
+/* ── RIGHT COLUMN ── */
+.catalog-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.75rem}
+.catalog-count{font-size:.9rem;color:var(--muted)}
+.catalog-count strong{color:var(--text)}
+.active-filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.active-tag{display:flex;align-items:center;gap:5px;background:var(--glacier);color:white;font-size:.78rem;padding:4px 10px;border-radius:20px}
+.active-tag button{background:none;border:none;color:white;cursor:pointer;font-size:.9rem;line-height:1;padding:0}
+.sort-select{border:1.5px solid var(--border);border-radius:6px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;background:white;color:var(--text);cursor:pointer}
+
+/* ── QUIZ BANNER ── */
+.quiz-banner{background:#FFF7F0;border:1.5px solid #F0C0A0;border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.quiz-text{font-size:.85rem;color:var(--text)}
+.quiz-text strong{display:block;margin-bottom:2px}
+.quiz-text span{color:var(--muted);font-size:.8rem}
+.quiz-btn{background:var(--accent);color:white;border:none;border-radius:6px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* ── GRID ── */
+.ski-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
+
+/* ── CARD ── */
+.ski-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:transform .25s,box-shadow .25s;position:relative}
+.ski-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(13,27,42,.11)}
+.ski-card.hidden{display:none}
+
+.card-badges{position:absolute;top:10px;left:10px;display:flex;gap:5px;z-index:2;flex-wrap:wrap}
+.badge{font-size:.68rem;font-weight:600;letter-spacing:.05em;padding:3px 8px;border-radius:3px;text-transform:uppercase}
+.badge-pct{background:#E8380D;color:white}
+.badge-occasion{background:#1A3A5C;color:white}
+.badge-rando{background:#2A7DB4;color:white}
+
+.card-img{width:100%;height:190px;background:linear-gradient(145deg,#E8F0F8,#C8D8E8);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.ski-svg{width:60px;opacity:.7}
+
+.card-body{padding:.9rem 1rem 1rem}
+.card-brand{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:2px}
+.card-name{font-size:.95rem;font-weight:500;color:var(--night);margin-bottom:7px;line-height:1.2}
+.card-meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.meta-tag{background:var(--ice);color:var(--glacier);font-size:.72rem;padding:2px 8px;border-radius:3px}
+.card-state{display:flex;align-items:center;gap:4px;margin-bottom:10px}
+.stars{color:#F0A500;font-size:.78rem;letter-spacing:-1px}
+.state-label{font-size:.75rem;color:var(--muted)}
+.card-price{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.price-now{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.03em;color:var(--night)}
+.price-was{font-size:.8rem;color:var(--muted);text-decoration:line-through}
+.price-currency{font-size:.85rem;color:var(--muted)}
+
+.card-btns{display:grid;grid-template-columns:1fr auto;gap:6px}
+.btn-mp{padding:9px 10px;background:var(--mp);color:white;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;text-decoration:none;transition:background .2s}
+.btn-mp:hover{background:#0080C0}
+.btn-tb{padding:9px 10px;background:var(--tb);color:white;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;text-decoration:none;white-space:nowrap;transition:background .2s}
+.btn-tb:hover{background:#003070}
+.mp-dot{width:14px;height:14px;background:white;border-radius:2px;font-size:8px;font-weight:700;color:var(--mp);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,27,42,.72);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:14px;max-width:460px;width:100%;padding:1.75rem;position:relative;animation:slideUp .28s ease}
+@keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--snow);border:none;width:30px;height:30px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:4px}
+.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.25rem}
+.pay-options{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem}
+.pay-option{display:flex;align-items:center;gap:12px;padding:14px;border:2px solid var(--border);border-radius:8px;cursor:pointer;text-decoration:none;color:var(--text);transition:all .2s}
+.pay-option:hover{border-color:var(--glacier);background:var(--snow)}
+.pay-option.mp:hover{border-color:var(--mp)}
+.pay-option.tb:hover{border-color:var(--tb)}
+.pay-logo{width:48px;height:32px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+.pay-logo.mp{background:var(--mp);color:white}
+.pay-logo.tb{background:var(--tb);color:white}
+.pay-info h4{font-size:.9rem;font-weight:500;margin-bottom:1px}
+.pay-info p{font-size:.76rem;color:var(--muted)}
+.pay-arrow{margin-left:auto;color:var(--muted)}
+.modal-note{font-size:.76rem;color:var(--muted);text-align:center;border-top:1px solid var(--border);padding-top:1rem}
+
+/* ── GUIDE SECTION ── */
+.guide-section{background:white;border-top:1px solid var(--border);padding:3.5rem 2rem}
+.guide-inner{max-width:860px;margin:0 auto}
+.guide-inner h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.5rem;color:var(--night)}
+.guide-intro{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:700px}
+
+.price-table{width:100%;border-collapse:collapse;margin-bottom:2.5rem;font-size:.88rem}
+.price-table th{background:var(--night);color:white;padding:10px 14px;text-align:left;font-weight:500}
+.price-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tr:nth-child(even) td{background:var(--snow)}
+
+.guide-blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-bottom:2.5rem}
+.guide-block{background:var(--snow);border-radius:8px;padding:1.25rem;border-left:3px solid var(--accent2)}
+.guide-block h3{font-size:.95rem;font-weight:500;color:var(--night);margin-bottom:.5rem}
+.guide-block p{font-size:.83rem;color:var(--muted);line-height:1.6}
+.guide-block .level-icon{font-size:1.4rem;margin-bottom:.5rem;display:block}
+
+.guide-qa{margin-top:1.5rem}
+.qa-item{border-bottom:1px solid var(--border);padding:1rem 0}
+.qa-item h3{font-size:.92rem;font-weight:500;color:var(--night);margin-bottom:.4rem}
+.qa-item p{font-size:.83rem;color:var(--muted);line-height:1.65}
+
+.related-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.rel-tag{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.8rem;color:var(--text);cursor:pointer;transition:all .2s}
+.rel-tag:hover{border-color:var(--glacier);color:var(--glacier)}
+
+/* ── FOOTER ── */
+footer{background:var(--night);color:#6B8099;padding:2rem;text-align:center;font-size:.82rem;border-top:1px solid rgba(255,255,255,.06)}
+footer a{color:#7A9AB5;text-decoration:none}
+footer .footer-grid{max-width:800px;margin:0 auto 1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:left}
+footer .footer-col h4{font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9DB4CC;margin-bottom:.75rem}
+footer .footer-col a{display:block;margin-bottom:.4rem;font-size:.82rem}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.2rem;margin-top:.5rem}
+.pay-logos{display:flex;justify-content:center;gap:1rem;margin-top:.75rem;align-items:center}
+.pay-chip{background:rgba(255,255,255,.08);border-radius:4px;padding:4px 10px;font-size:.75rem;font-weight:500;color:#9DB4CC}
+
+/* ── AGENT ── */
+.agent-modal{background:white;border-radius:16px;width:100%;max-width:480px;display:flex;flex-direction:column;overflow:hidden;max-height:90vh}
+.agent-header{background:var(--night);color:white;padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;position:relative}
+.agent-avatar{font-size:1.6rem;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.agent-title{font-weight:500;font-size:.95rem}
+.agent-sub{font-size:.72rem;color:#7A9AB5;margin-top:1px}
+.agent-header .modal-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);color:white;border:none;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.agent-messages{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;min-height:280px;max-height:380px;background:var(--snow)}
+.agent-msg{padding:.7rem .9rem;border-radius:10px;font-size:.88rem;line-height:1.55;max-width:85%;white-space:pre-wrap}
+.msg-agent{background:white;border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:4px 10px 10px 10px}
+.msg-user{background:var(--glacier);color:white;align-self:flex-end;border-radius:10px 4px 10px 10px}
+.typing-indicator{display:flex;gap:5px;align-items:center;padding:.6rem .9rem}
+.typing-indicator span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce .9s infinite}
+.typing-indicator span:nth-child(2){animation-delay:.15s}
+.typing-indicator span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.agent-input-row{display:flex;gap:8px;padding:.75rem 1rem;border-top:1px solid var(--border);background:white}
+.agent-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);outline:none}
+.agent-input:focus{border-color:var(--glacier)}
+.agent-send{background:var(--glacier);color:white;border:none;border-radius:8px;width:38px;height:38px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.agent-send:hover{background:var(--accent)}
+
+@media(max-width:760px){
+  .page-wrap{grid-template-columns:1fr}
+  .sidebar{position:static;display:none}
+  nav .nav-cta{display:flex}
+  nav a:not(.nav-cta){display:none}
+  .ski-grid{grid-template-columns:repeat(2,1fr)}
+  footer .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">KOYAI<em>SKI</em></div>
+  <nav>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#guia">Guía de compra</a>
+    <a href="https://wa.me/56900000000" class="nav-cta">💬 WhatsApp</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Coyhaique · Aysén</div>
+    <h1>Esquís de<br><em>segunda mano</em></h1>
+    <p>Equipo seleccionado, revisado y garantizado. Precios reales para esquiar en Aysén.</p>
+  </div>
+</div>
+
+<div class="reassurance">
+  <div class="reassurance-inner">
+    <div class="rea-item"><span class="icon">✅</span><div><strong>Equipo controlado</strong><span>Revisado antes de publicar</span></div></div>
+    <div class="rea-item"><span class="icon">💳</span><div><strong>Pago 100% seguro</strong><span>Mercado Pago · Transbank</span></div></div>
+    <div class="rea-item"><span class="icon">📍</span><div><strong>Retiro en Coyhaique</strong><span>Km 10 Camino Balmaceda</span></div></div>
+    <div class="rea-item"><span class="icon">💬</span><div><strong>Consejo experto</strong><span>19 temporadas en pista</span></div></div>
+  </div>
+</div>
+
+<div class="ratings-bar">
+  <div class="ratings-inner">
+    <div class="stars-display">★★★★★</div>
+    <div class="ratings-text"><strong>4,9/5</strong> · Basado en opiniones de compradores locales</div>
+    <div class="verified-badge">Compras verificadas por WhatsApp</div>
+  </div>
+</div>
+
+<div class="page-wrap" id="catalogo">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Filtros</div>
+
+    <div class="filter-group">
+      <button class="filter-toggle open" onclick="toggleFilter(this)">Marca <span class="arrow">▲</span></button>
+      <div class="filter-body open">
+        <ul class="check-list">
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="rossignol"> Rossignol <span class="count">2</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="salomon"> Salomon <span class="count">2</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="atomic"> Atomic <span class="count">1</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="head"> Head <span class="count">1</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="k2"> K2 <span class="count">1</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="marca" value="fischer"> Fischer <span class="count">1</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle open" onclick="toggleFilter(this)">Talla (cm) <span class="arrow">▲</span></button>
+      <div class="filter-body open">
+        <div class="range-wrap">
+          <input type="range" id="talla-min" min="140" max="190" value="140" step="5" oninput="updateRange()">
+          <input type="range" id="talla-max" min="140" max="190" value="190" step="5" oninput="updateRange()">
+          <div class="range-labels"><span id="talla-min-val">140 cm</span><span id="talla-max-val">190 cm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle open" onclick="toggleFilter(this)">Estado <span class="arrow">▲</span></button>
+      <div class="filter-body open">
+        <ul class="check-list">
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="estado" value="5"> ★★★★★ Como nuevo <span class="count">3</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="estado" value="4"> ★★★★☆ Muy buen estado <span class="count">2</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="estado" value="3"> ★★★☆☆ Buen estado <span class="count">1</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle" onclick="toggleFilter(this)">Precio (CLP) <span class="arrow">▼</span></button>
+      <div class="filter-body">
+        <div class="range-wrap">
+          <input type="range" id="precio-min" min="0" max="600000" value="0" step="10000" oninput="updatePriceRange()">
+          <input type="range" id="precio-max" min="0" max="600000" value="600000" step="10000" oninput="updatePriceRange()">
+          <div class="range-labels"><span id="precio-min-val">$0</span><span id="precio-max-val">$600.000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle" onclick="toggleFilter(this)">Género <span class="arrow">▼</span></button>
+      <div class="filter-body">
+        <ul class="check-list">
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="genero" value="hombre"> Hombre <span class="count">4</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="genero" value="mujer"> Mujer <span class="count">2</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle" onclick="toggleFilter(this)">Nivel <span class="arrow">▼</span></button>
+      <div class="filter-body">
+        <ul class="check-list">
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="nivel" value="iniciante"> Iniciante <span class="count">1</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="nivel" value="intermedio"> Intermedio <span class="count">3</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="nivel" value="avanzado"> Avanzado <span class="count">2</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-toggle" onclick="toggleFilter(this)">Tipo de ski <span class="arrow">▼</span></button>
+      <div class="filter-body">
+        <ul class="check-list">
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="tipo" value="carving"> Carving <span class="count">3</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="tipo" value="all-mountain"> All Mountain <span class="count">2</span></label></li>
+          <li><label><input type="checkbox" onchange="applyFilters()" data-filter="tipo" value="freeride"> Freeride <span class="count">1</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="filter-reset" onclick="resetFilters()">Reinicializar filtros</button>
+  </aside>
+
+  <!-- RIGHT COLUMN -->
+  <main>
+    <div class="catalog-header">
+      <div class="catalog-count"><strong id="result-count">6</strong> esquís disponibles</div>
+      <select class="sort-select" onchange="sortCards(this.value)">
+        <option value="default">Ordenar por</option>
+        <option value="price-asc">Precio: menor a mayor</option>
+        <option value="price-desc">Precio: mayor a menor</option>
+        <option value="state-desc">Mejor estado</option>
+      </select>
+    </div>
+
+    <div class="active-filters" id="active-filters"></div>
+
+    <div class="quiz-banner">
+      <div class="quiz-text">
+        <strong>¿No sabes qué esquí elegir?</strong>
+        <span>5 preguntas para encontrar tu par ideal según tu nivel y las pistas de Aysén</span>
+      </div>
+      <button class="quiz-btn" onclick="openQuiz()">Hacer el test →</button>
+    </div>
+
+    <div class="ski-grid" id="ski-grid">
+
+      <!-- CARD 1 -->
+      <div class="ski-card"
+        data-marca="rossignol" data-tipo="carving" data-genero="hombre"
+        data-nivel="intermedio" data-estado="4" data-talla="165" data-precio="290000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-47%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#FAEAEA,#F09090)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="0" width="24" height="195" rx="12" fill="#E8380D" opacity=".85"/>
+            <rect x="22" y="65" width="16" height="22" rx="3" fill="#1A1A1A" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Rossignol</div>
+          <div class="card-name">Experience 78 Carbon</div>
+          <div class="card-meta">
+            <span class="meta-tag">165 cm</span><span class="meta-tag">Carving</span><span class="meta-tag">2022</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★★</span><span class="stars" style="color:var(--border)">★</span>
+            <span class="state-label">Muy buen estado</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">290.000</span>
+            <span class="price-was">$550.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('Rossignol Experience 78 Carbon',290000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('Rossignol Experience 78 Carbon',290000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="ski-card"
+        data-marca="salomon" data-tipo="all-mountain" data-genero="hombre"
+        data-nivel="avanzado" data-estado="5" data-talla="172" data-precio="480000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-46%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#E8F0F8,#B0C8E0)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="0" width="28" height="195" rx="14" fill="#1A3A5C"/>
+            <rect x="16" y="0" width="28" height="195" rx="14" fill="none" stroke="#2A7DB4" stroke-width="2"/>
+            <rect x="21" y="65" width="18" height="22" rx="3" fill="#0D1B2A" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Salomon</div>
+          <div class="card-name">QST 99 + fijaciones</div>
+          <div class="card-meta">
+            <span class="meta-tag">172 cm</span><span class="meta-tag">All Mountain</span><span class="meta-tag">Con fix</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★★★</span>
+            <span class="state-label">Como nuevo</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">480.000</span>
+            <span class="price-was">$890.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('Salomon QST 99',480000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('Salomon QST 99',480000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="ski-card"
+        data-marca="atomic" data-tipo="freeride" data-genero="hombre"
+        data-nivel="avanzado" data-estado="4" data-talla="180" data-precio="195000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-54%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#2A1A3A,#4A2A6A)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="0" width="36" height="195" rx="18" fill="#8A4AB5"/>
+            <rect x="12" y="0" width="36" height="195" rx="18" fill="none" stroke="#C070E8" stroke-width="2" opacity=".6"/>
+            <rect x="19" y="68" width="22" height="22" rx="3" fill="#1A0A2A" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Atomic</div>
+          <div class="card-name">Bent Chetler 100</div>
+          <div class="card-meta">
+            <span class="meta-tag">180 cm</span><span class="meta-tag">Freeride</span><span class="meta-tag">2021</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★★</span><span class="stars" style="color:var(--border)">★</span>
+            <span class="state-label">Buen estado</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">195.000</span>
+            <span class="price-was">$420.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('Atomic Bent Chetler 100',195000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('Atomic Bent Chetler 100',195000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="ski-card"
+        data-marca="head" data-tipo="carving" data-genero="mujer"
+        data-nivel="intermedio" data-estado="5" data-talla="158" data-precio="320000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-47%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#F5E8D0,#E8C880)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="17" y="0" width="26" height="195" rx="13" fill="#C88020"/>
+            <rect x="17" y="0" width="26" height="195" rx="13" fill="none" stroke="#F0A030" stroke-width="2"/>
+            <rect x="22" y="66" width="16" height="20" rx="3" fill="#5A3A00" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Head</div>
+          <div class="card-name">Kore 93 W — Mujer</div>
+          <div class="card-meta">
+            <span class="meta-tag">158 cm</span><span class="meta-tag">Carving</span><span class="meta-tag">Mujer</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★★★</span>
+            <span class="state-label">Impecable</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">320.000</span>
+            <span class="price-was">$600.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('Head Kore 93 W',320000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('Head Kore 93 W',320000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="ski-card"
+        data-marca="k2" data-tipo="all-mountain" data-genero="hombre"
+        data-nivel="intermedio" data-estado="3" data-talla="176" data-precio="140000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-71%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#E8F8E8,#90D890)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="0" width="30" height="195" rx="15" fill="#1A7A2A"/>
+            <rect x="15" y="0" width="30" height="195" rx="15" fill="none" stroke="#30C040" stroke-width="2" opacity=".8"/>
+            <rect x="20" y="66" width="20" height="22" rx="3" fill="#0A3A10" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">K2</div>
+          <div class="card-name">Mindbender 108 Ti</div>
+          <div class="card-meta">
+            <span class="meta-tag">176 cm</span><span class="meta-tag">All Mountain</span><span class="meta-tag">Powder</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★</span><span class="stars" style="color:var(--border)">★★</span>
+            <span class="state-label">Estado regular</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">140.000</span>
+            <span class="price-was">$480.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('K2 Mindbender 108 Ti',140000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('K2 Mindbender 108 Ti',140000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 6 -->
+      <div class="ski-card"
+        data-marca="fischer" data-tipo="carving" data-genero="mujer"
+        data-nivel="avanzado" data-estado="5" data-talla="160" data-precio="410000">
+        <div class="card-badges">
+          <span class="badge badge-pct">-47%</span>
+          <span class="badge badge-occasion">Ocasión</span>
+        </div>
+        <div class="card-img" style="background:linear-gradient(145deg,#FAEAEA,#E05050)">
+          <svg class="ski-svg" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="17" y="0" width="26" height="195" rx="13" fill="#C82020"/>
+            <rect x="17" y="0" width="26" height="195" rx="13" fill="none" stroke="#FF5050" stroke-width="2" opacity=".7"/>
+            <rect x="22" y="66" width="16" height="20" rx="3" fill="#500000" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Fischer</div>
+          <div class="card-name">RC4 Worldcup SC</div>
+          <div class="card-meta">
+            <span class="meta-tag">160 cm</span><span class="meta-tag">Race / SL</span><span class="meta-tag">2023</span>
+          </div>
+          <div class="card-state">
+            <span class="stars">★★★★★</span>
+            <span class="state-label">Excelente</span>
+          </div>
+          <div class="card-price">
+            <span class="price-currency">$</span>
+            <span class="price-now">410.000</span>
+            <span class="price-was">$780.000</span>
+          </div>
+          <div class="card-btns">
+            <a href="#" class="btn-mp" onclick="openModal('Fischer RC4 Worldcup SC',410000);return false">
+              <span class="mp-dot">MP</span>Mercado Pago
+            </a>
+            <a href="#" class="btn-tb" onclick="openModal('Fischer RC4 Worldcup SC',410000);return false">💳 TB</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ski-grid -->
+  </main>
+</div><!-- /page-wrap -->
+
+<!-- GUIDE -->
+<section class="guide-section" id="guia">
+  <div class="guide-inner">
+    <h2>Cómo elegir tus esquís de segunda mano en Aysén</h2>
+    <p class="guide-intro">Coyhaique tiene acceso a El Fraile y varios sectores de montaña con condiciones muy distintas a las estaciones del centro del país: nieve pesada, pistas cortas, y mucha variabilidad de temperatura. Elegir bien el equipo de segunda mano puede marcar la diferencia entre una temporada cómoda y una llena de frustraciones.</p>
+
+    <table class="price-table">
+      <thead><tr><th>Estado del equipo</th><th>Rango de precio (CLP)</th></tr></thead>
+      <tbody>
+        <tr><td>★★★★★ Como nuevo / impecable</td><td>$300.000 – $500.000</td></tr>
+        <tr><td>★★★★☆ Muy buen estado</td><td>$180.000 – $350.000</td></tr>
+        <tr><td>★★★☆☆ Buen estado</td><td>$80.000 – $200.000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="guide-blocks">
+      <div class="guide-block">
+        <span class="level-icon">🟢</span>
+        <h3>Eres principiante</h3>
+        <p>Elige un esquí corto — 10 cm menos que tu talla —, blando y maniobrable. En Aysén no necesitas nada técnico para comenzar. Un carving de segunda mano en buen estado te da el mismo resultado a la mitad del precio.</p>
+      </div>
+      <div class="guide-block">
+        <span class="level-icon">🟡</span>
+        <h3>Nivel intermedio</h3>
+        <p>Apuntas a mejorar tu técnica y explorar terreno variado. Un All Mountain es la opción más versátil para las condiciones de Aysén: funciona en pista dura y en nieve fresca sin comprometer el control.</p>
+      </div>
+      <div class="guide-block">
+        <span class="level-icon">🔴</span>
+        <h3>Nivel avanzado / experto</h3>
+        <p>Si esquías fuera de pista o buscas velocidad, invierte en un equipo más rígido y ancho (95–110 mm bajo el pie). La nevada patagónica suele ser pesada — necesitas un ski que flote y corte bien.</p>
+      </div>
+      <div class="guide-block">
+        <span class="level-icon">📏</span>
+        <h3>La talla correcta</h3>
+        <p>Regla general: entre mentón y frente para carving en pista; entre nariz y 5 cm sobre la cabeza para freeride y All Mountain con nieve fresca. Nunca compres más largo "para crecer" — perjudica la técnica.</p>
+      </div>
+    </div>
+
+    <div class="guide-qa">
+      <div class="qa-item">
+        <h3>¿Qué revisar antes de comprar un esquí de segunda mano?</h3>
+        <p>Primero las cantoneras: si están redondeadas o con cortes profundos, el ski no va a carvar bien y tendrás que afilarlas. Luego las suelas: rayaduras finas son normales, grietas longitudinales son problema. Las fijaciones deben soltar correctamente — pruébalas con la bota puesta. Un equipo con estas tres cosas en orden vale su precio, sin importar el año.</p>
+      </div>
+      <div class="qa-item">
+        <h3>¿Con o sin fijaciones?</h3>
+        <p>Si compras tu primer par, un pack ski + fijación ya montada y calibrada es la opción más segura. Si ya tienes botas de ski y conoces tu DIN (índice de suelta), puedes comprar el ski solo y montar las fijaciones en Coyhaique. Consúltanos por WhatsApp si tienes dudas.</p>
+      </div>
+      <div class="qa-item">
+        <h3>¿Qué diferencia un esquí de pista de uno de freeride en Aysén?</h3>
+        <p>En El Fraile y los sectores de montaña de Aysén la nieve puede ser dura por la mañana y blanda o polvo al mediodía. Un ski All Mountain de 90–105 mm bajo el pie te da el mejor equilibrio. Si solo esquías pista preparada, un carving de 70–85 mm es más eficiente.</p>
+      </div>
+    </div>
+
+    <div class="related-tags">
+      <button class="rel-tag" onclick="filterByType('carving')">Skis Carving</button>
+      <button class="rel-tag" onclick="filterByType('all-mountain')">Skis All Mountain</button>
+      <button class="rel-tag" onclick="filterByType('freeride')">Skis Freeride</button>
+      <button class="rel-tag">Skis Mujer</button>
+      <button class="rel-tag">Pack ski + fijaciones</button>
+      <button class="rel-tag">Rossignol ocasión</button>
+      <button class="rel-tag">Salomon ocasión</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Koyai Ski</h4>
+      <p style="font-size:.82rem;line-height:1.6;margin-bottom:.75rem">Equipo de ski de segunda mano seleccionado en Coyhaique, Aysén. 19 temporadas de experiencia en pista.</p>
+      <a href="https://wa.me/56900000000">💬 WhatsApp</a>
+      <a href="mailto:hola@koyaiskishop.cl">hola@koyaiskishop.cl</a>
+    </div>
+    <div class="footer-col">
+      <h4>Información</h4>
+      <a href="#guia">Guía de compra</a>
+      <a href="#catalogo">Ver catálogo</a>
+      <a href="https://wa.me/56900000000">Consultar sobre un esquí</a>
+    </div>
+    <div class="footer-col">
+      <h4>Zona de entrega</h4>
+      <p style="font-size:.82rem;line-height:1.6">Retiro en Coyhaique · Km 10 Camino Balmaceda.<br>Despacho a domicilio en la región de Aysén. Consultar disponibilidad.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="pay-logos">
+      <span class="pay-chip">Mercado Pago</span>
+      <span class="pay-chip">Transbank / Webpay</span>
+      <span class="pay-chip">Débito Redcompra</span>
+    </div>
+    <p style="margin-top:.75rem">Precios en pesos chilenos (CLP). Stock sujeto a disponibilidad.</p>
+  </div>
+</footer>
+
+<!-- AGENT MODAL -->
+<div class="modal-overlay" id="agent-overlay" onclick="if(event.target===this)closeAgent()">
+  <div class="agent-modal">
+    <div class="agent-header">
+      <div class="agent-avatar">🎿</div>
+      <div>
+        <div class="agent-title">Asesor Koyai Ski</div>
+        <div class="agent-sub">Responde en segundos · IA</div>
+      </div>
+      <button class="modal-close" onclick="closeAgent()">✕</button>
+    </div>
+    <div class="agent-messages" id="agent-messages"></div>
+    <div class="agent-input-row">
+      <input type="text" id="agent-input" class="agent-input" placeholder="Escribe tu respuesta..." autocomplete="off">
+      <button class="agent-send" onclick="agentSend()">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Comprar esquís</h3>
+    <p class="modal-sub" id="modal-name">—</p>
+    <div class="pay-options">
+      <a href="#" class="pay-option mp" id="mp-link" target="_blank">
+        <div class="pay-logo mp">MP</div>
+        <div class="pay-info"><h4>Mercado Pago</h4><p>Tarjeta, débito, hasta 12 cuotas sin interés</p></div>
+        <span class="pay-arrow">→</span>
+      </a>
+      <a href="#" class="pay-option tb" id="tb-link" target="_blank">
+        <div class="pay-logo tb">TB</div>
+        <div class="pay-info"><h4>Transbank / Webpay</h4><p>Débito Redcompra y tarjetas de crédito</p></div>
+        <span class="pay-arrow">→</span>
+      </a>
+    </div>
+    <p class="modal-note">Recibirás confirmación por WhatsApp · Precio: <strong id="modal-price">$0</strong></p>
+  </div>
+</div>
+
+<script>
+// FILTER TOGGLE
+function toggleFilter(btn){
+  btn.classList.toggle('open');
+  btn.querySelector('.arrow').textContent = btn.classList.contains('open') ? '▲' : '▼';
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// APPLY FILTERS
+function applyFilters(){
+  const cards = document.querySelectorAll('.ski-card');
+  const marcas = getChecked('marca');
+  const estados = getChecked('estado').map(Number);
+  const generos = getChecked('genero');
+  const niveles = getChecked('nivel');
+  const tipos = getChecked('tipo');
+  const tallaMin = parseInt(document.getElementById('talla-min').value);
+  const tallaMax = parseInt(document.getElementById('talla-max').value);
+  const precioMin = parseInt(document.getElementById('precio-min').value);
+  const precioMax = parseInt(document.getElementById('precio-max').value);
+
+  let visible = 0;
+  cards.forEach(c => {
+    const ok =
+      (!marcas.length || marcas.includes(c.dataset.marca)) &&
+      (!estados.length || estados.includes(Number(c.dataset.estado))) &&
+      (!generos.length || generos.includes(c.dataset.genero)) &&
+      (!niveles.length || niveles.includes(c.dataset.nivel)) &&
+      (!tipos.length || tipos.includes(c.dataset.tipo)) &&
+      Number(c.dataset.talla) >= tallaMin && Number(c.dataset.talla) <= tallaMax &&
+      Number(c.dataset.precio) >= precioMin && Number(c.dataset.precio) <= precioMax;
+    c.classList.toggle('hidden', !ok);
+    if(ok) visible++;
+  });
+  document.getElementById('result-count').textContent = visible;
+}
+
+function getChecked(filter){
+  return [...document.querySelectorAll(`[data-filter="${filter}"]:checked`)].map(i=>i.value);
+}
+
+function resetFilters(){
+  document.querySelectorAll('input[type=checkbox]').forEach(i=>i.checked=false);
+  document.getElementById('talla-min').value=140;
+  document.getElementById('talla-max').value=190;
+  document.getElementById('precio-min').value=0;
+  document.getElementById('precio-max').value=600000;
+  updateRange(); updatePriceRange();
+  applyFilters();
+}
+
+function updateRange(){
+  const min = document.getElementById('talla-min').value;
+  const max = document.getElementById('talla-max').value;
+  document.getElementById('talla-min-val').textContent = min+' cm';
+  document.getElementById('talla-max-val').textContent = max+' cm';
+  applyFilters();
+}
+
+function updatePriceRange(){
+  const min = parseInt(document.getElementById('precio-min').value);
+  const max = parseInt(document.getElementById('precio-max').value);
+  document.getElementById('precio-min-val').textContent = '$'+min.toLocaleString('es-CL');
+  document.getElementById('precio-max-val').textContent = '$'+max.toLocaleString('es-CL');
+  applyFilters();
+}
+
+// SORT
+function sortCards(val){
+  const grid = document.getElementById('ski-grid');
+  const cards = [...grid.querySelectorAll('.ski-card')];
+  if(val==='price-asc') cards.sort((a,b)=>+a.dataset.precio - +b.dataset.precio);
+  else if(val==='price-desc') cards.sort((a,b)=>+b.dataset.precio - +a.dataset.precio);
+  else if(val==='state-desc') cards.sort((a,b)=>+b.dataset.estado - +a.dataset.estado);
+  cards.forEach(c=>grid.appendChild(c));
+}
+
+// FILTER BY TYPE (from tags)
+function filterByType(tipo){
+  resetFilters();
+  const cb = document.querySelector(`[data-filter="tipo"][value="${tipo}"]`);
+  if(cb){ cb.checked=true; applyFilters(); }
+  document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
+}
+
+// ── AGENT ──
+const STOCK = [
+  {nombre:"Rossignol Experience 78 Carbon",tipo:"carving",genero:"hombre",nivel:["iniciante","intermedio"],talla:165,precio:290000,estado:"Muy buen estado",estrellas:4},
+  {nombre:"Salomon QST 99 + fijaciones",tipo:"all-mountain",genero:"hombre",nivel:["intermedio","avanzado"],talla:172,precio:480000,estado:"Como nuevo",estrellas:5},
+  {nombre:"Atomic Bent Chetler 100",tipo:"freeride",genero:"hombre",nivel:["avanzado"],talla:180,precio:195000,estado:"Buen estado",estrellas:4},
+  {nombre:"Head Kore 93 W — Mujer",tipo:"carving",genero:"mujer",nivel:["intermedio","avanzado"],talla:158,precio:320000,estado:"Impecable",estrellas:5},
+  {nombre:"K2 Mindbender 108 Ti",tipo:"all-mountain",genero:"hombre",nivel:["intermedio"],talla:176,precio:140000,estado:"Estado regular",estrellas:3},
+  {nombre:"Fischer RC4 Worldcup SC",tipo:"carving",genero:"mujer",nivel:["avanzado"],talla:160,precio:410000,estado:"Excelente",estrellas:5}
+];
+
+let agentHistory = [];
+
+function openQuiz(){
+  agentHistory = [];
+  document.getElementById('agent-messages').innerHTML = '';
+  document.getElementById('agent-input').value = '';
+  document.getElementById('agent-overlay').classList.add('open');
+  agentStart();
+}
+
+function closeAgent(){
+  document.getElementById('agent-overlay').classList.remove('open');
+}
+
+async function agentStart(){
+  const sys = `Eres un asesor experto en esquís de segunda mano para la tienda Koyai Ski en Coyhaique, Aysén, Chile. El dueño tiene 19 temporadas de experiencia como pistero-socorrista y formador.
+
+Tu misión: hacer exactamente 4 preguntas, una por una, para recomendar el esquí ideal del stock disponible. Sé directo, amable, breve. Habla en español.
+
+Las 4 preguntas (en este orden):
+1. Nivel de esquí (principiante / intermedio / avanzado)
+2. Tipo de práctica (pista preparada / all mountain / freeride / polvo)
+3. Talla del esquiador en cm (para calcular la longitud de ski correcta)
+4. Género (hombre / mujer)
+
+Después de las 4 respuestas, analiza el stock y recomienda el mejor match con una explicación concisa de por qué. Si hay más de uno que encaja, menciona ambos. Si ninguno encaja perfectamente, recomienda el más cercano y explica el compromiso.
+
+Stock disponible (JSON):
+${JSON.stringify(STOCK, null, 2)}
+
+Reglas técnicas de talla:
+- Carving pista: talla esquiador - 10 a - 5 cm
+- All mountain: talla esquiador - 5 a + 5 cm  
+- Freeride / polvo: talla esquiador + 0 a + 10 cm
+
+Empieza presentándote muy brevemente (1 frase) y haciendo la primera pregunta.`;
+
+  agentHistory = [{role:'user', content:'Empezar'}];
+  const reply = await callAgent(sys);
+  appendMessage('agent', reply);
+}
+
+async function agentSend(){
+  const input = document.getElementById('agent-input');
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = '';
+  appendMessage('user', text);
+  agentHistory.push({role:'user', content: text});
+  
+  const sys = `Eres un asesor experto en esquís de segunda mano para Koyai Ski en Coyhaique, Aysén. Directo, amable, breve. Español.
+
+Proceso: hacer exactamente 4 preguntas en orden — nivel, tipo de práctica, talla, género — luego recomendar el mejor esquí del stock.
+
+Stock disponible:
+${JSON.stringify(STOCK, null, 2)}
+
+Reglas técnicas de talla:
+- Carving pista: talla esquiador - 10 a - 5 cm
+- All mountain: talla esquiador - 5 a + 5 cm
+- Freeride / polvo: talla esquiador + 0 a + 10 cm
+
+Cuando hagas la recomendación final, termina con esta línea exacta:
+RECOMENDACION:[nombre exacto del ski]`;
+
+  showTyping();
+  const reply = await callAgent(sys);
+  hideTyping();
+  agentHistory.push({role:'assistant', content: reply});
+
+  const recMatch = reply.match(/RECOMENDACION:\[(.+?)\]/);
+  if(recMatch){
+    const skiName = recMatch[1];
+    const cleanReply = reply.replace(/RECOMENDACION:\[.+?\]/, '').trim();
+    appendMessage('agent', cleanReply);
+    highlightRecommended(skiName);
+  } else {
+    appendMessage('agent', reply);
+  }
+}
+
+async function callAgent(systemPrompt){
+  try {
+    const messages = agentHistory.length > 1 
+      ? agentHistory.slice(1) 
+      : [{role:'user', content:'Empezar'}];
+    
+    const res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system: systemPrompt,
+        messages: messages
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.filter(b=>b.type==='text').map(b=>b.text).join('') || 'Error al conectar con el agente.';
+    agentHistory.push({role:'assistant', content: text});
+    return text;
+  } catch(e) {
+    return 'Error de conexión. Escríbenos por WhatsApp para asesoramiento directo.';
+  }
+}
+
+function appendMessage(role, text){
+  const wrap = document.getElementById('agent-messages');
+  const div = document.createElement('div');
+  div.className = 'agent-msg ' + (role==='user' ? 'msg-user' : 'msg-agent');
+  div.textContent = text;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping(){
+  const wrap = document.getElementById('agent-messages');
+  const div = document.createElement('div');
+  div.className = 'agent-msg msg-agent typing-indicator';
+  div.id = 'typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function hideTyping(){
+  const t = document.getElementById('typing');
+  if(t) t.remove();
+}
+
+function highlightRecommended(skiName){
+  document.querySelectorAll('.ski-card').forEach(c=>{
+    const name = c.querySelector('.card-name')?.textContent || '';
+    const brand = c.querySelector('.card-brand')?.textContent || '';
+    if(skiName.includes(name) || skiName.includes(brand)){
+      c.style.border = '2.5px solid var(--accent)';
+      c.style.boxShadow = '0 0 0 4px rgba(232,56,13,.15)';
+      const tag = document.createElement('div');
+      tag.style.cssText = 'background:var(--accent);color:white;font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;text-align:center';
+      tag.textContent = '⭐ Recomendado para ti';
+      c.insertBefore(tag, c.firstChild);
+    }
+  });
+  closeAgent();
+  document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && document.getElementById('agent-overlay').classList.contains('open')){
+    agentSend();
+  }
+});
+
+// MODAL
+function openModal(name, price){
+  document.getElementById('modal-name').textContent = name;
+  document.getElementById('modal-price').textContent = '$'+price.toLocaleString('es-CL');
+  document.getElementById('mp-link').href = 'https://mpago.la/tu-link-aqui';
+  document.getElementById('tb-link').href = 'https://webpay.cl/tu-link-aqui';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>
